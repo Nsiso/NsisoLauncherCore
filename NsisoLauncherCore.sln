@@ -1,0 +1,18 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "NsisoLauncherCore", "NsisoLauncherCore\NsisoLauncherCore.shproj", "{5C2D381D-748D-4809-BFE3-179CCCA2DC0D}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		NsisoLauncherCore\NsisoLauncherCore.projitems*{5c2d381d-748d-4809-bfe3-179ccca2dc0d}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FD334302-493D-4C47-94C4-D3E21524D25C}
+	EndGlobalSection
+EndGlobal
