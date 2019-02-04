@@ -27,11 +27,7 @@ namespace NsisoLauncherCore.Util
             string crashreportDir = verRootDir + "\\crash-reports";
             string latestlogPath = verRootDir + "\\logs\\latest.log";
 
-            //如果存在崩溃日志优先读取
-            //！！！！！！！！！！！！！！！！
-            //下面的感叹号记得去掉！！！！！！
-            //！！！！！！！！！！！！！！！！
-            if (!Directory.Exists(crashreportDir))
+            if (Directory.Exists(crashreportDir))
             {
                 var files = Directory.EnumerateFiles(crashreportDir);
                 var logs = files.Where((x) =>
