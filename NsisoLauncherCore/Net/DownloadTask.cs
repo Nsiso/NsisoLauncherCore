@@ -1,4 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace NsisoLauncherCore.Net
 {
@@ -17,6 +20,8 @@ namespace NsisoLauncherCore.Net
 
         public string To { get; set; }
 
+        public Func<Exception> Todo { get; set; }
+
         private long _totalSize = 1;
         public long TotalSize
         {
@@ -34,6 +39,17 @@ namespace NsisoLauncherCore.Net
             private set {
                 _downloadSize = value;
                 OnPropertyChanged("DownloadSize");
+            }
+        }
+
+        private string _state;
+        public string State
+        {
+            get { return _state; }
+            private set
+            {
+                _state = value;
+                OnPropertyChanged("State");
             }
         }
 
@@ -58,6 +74,23 @@ namespace NsisoLauncherCore.Net
         private void OnPropertyChanged(string strPropertyInfo)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(strPropertyInfo));
+        }
+    }
+
+    public static class DownloadTaskHelper
+    {
+        public static async Task<long> GetFileSize(DownloadTask task)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(task.From);
+            HttpWebResponse response = (HttpWebResponse) await request.GetResponseAsync();
+            long size = response.ContentLength;
+            response.Close();
+            return size;
+        }
+
+        public static long GetFileSize(HttpWebResponse response)
+        {
+            return response.ContentLength;
         }
     }
 }

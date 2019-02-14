@@ -1,5 +1,4 @@
-﻿using Endpoints;
-using NsisoLauncherCore.Net.MojangApi.Api;
+﻿using NsisoLauncherCore.Net.MojangApi.Api;
 using NsisoLauncherCore.Net.MojangApi.Endpoints;
 using System;
 using System.Collections.Generic;
@@ -15,7 +14,7 @@ namespace NsisoLauncherCore.Auth
     {
         public Credentials Credentials { get; set; }
 
-        public Uri ProxyAuthServerAddress { get; set; }
+        public string ProxyAuthServerAddress { get; set; }
 
         public List<string> AuthArgs { get; set; }
 
@@ -26,7 +25,7 @@ namespace NsisoLauncherCore.Auth
                 Authenticate authenticate = new Authenticate(Credentials);
                 if (ProxyAuthServerAddress != null)
                 {
-                    authenticate.Address = ProxyAuthServerAddress;
+                    authenticate.Address = new Uri(ProxyAuthServerAddress + "/authenticate");
                 }
                 if (AuthArgs != null && AuthArgs.Count != 0)
                 {
@@ -70,7 +69,7 @@ namespace NsisoLauncherCore.Auth
                 Authenticate authenticate = new Authenticate(Credentials);
                 if (ProxyAuthServerAddress != null)
                 {
-                    authenticate.Address = ProxyAuthServerAddress;
+                    authenticate.Address = new Uri(ProxyAuthServerAddress + "/authenticate");
                 }
                 if (AuthArgs != null && AuthArgs.Count != 0)
                 {
@@ -117,7 +116,7 @@ namespace NsisoLauncherCore.Auth
     {
         public string AccessToken { get; set; }
 
-        public Uri ProxyAuthServerAddress { get; set; }
+        public string ProxyAuthServerAddress { get; set; }
 
         public List<string> AuthArgs { get; set; }
 
@@ -132,7 +131,7 @@ namespace NsisoLauncherCore.Auth
                 Validate validate = new Validate(AccessToken);
                 if (ProxyAuthServerAddress != null)
                 {
-                    validate.Address = ProxyAuthServerAddress;
+                    validate.Address = new Uri(ProxyAuthServerAddress + "/validate");
                 }
                 if (AuthArgs != null && AuthArgs.Count != 0)
                 {
@@ -150,7 +149,7 @@ namespace NsisoLauncherCore.Auth
                     Refresh refresh = new Refresh(AccessToken);
                     if (ProxyAuthServerAddress != null)
                     {
-                        refresh.Address = ProxyAuthServerAddress;
+                        validate.Address = new Uri(ProxyAuthServerAddress + "/refresh");
                     }
                     if (AuthArgs != null && AuthArgs.Count != 0)
                     {
@@ -196,7 +195,7 @@ namespace NsisoLauncherCore.Auth
                 Validate validate = new Validate(AccessToken);
                 if (ProxyAuthServerAddress != null)
                 {
-                    validate.Address = ProxyAuthServerAddress;
+                    validate.Address = new Uri(ProxyAuthServerAddress + "/validate");
                 }
                 if (AuthArgs != null && AuthArgs.Count != 0)
                 {
@@ -213,7 +212,7 @@ namespace NsisoLauncherCore.Auth
                     Refresh refresh = new Refresh(AccessToken);
                     if (ProxyAuthServerAddress != null)
                     {
-                        refresh.Address = ProxyAuthServerAddress;
+                        validate.Address = new Uri(ProxyAuthServerAddress + "/refresh");
                     }
                     if (AuthArgs != null && AuthArgs.Count != 0)
                     {

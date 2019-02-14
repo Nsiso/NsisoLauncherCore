@@ -7,6 +7,7 @@ using System.IO;
 using System.Timers;
 using NsisoLauncherCore.Modules;
 using System.Collections.Concurrent;
+using System.Threading.Tasks;
 
 namespace NsisoLauncherCore.Net
 {
@@ -82,7 +83,7 @@ namespace NsisoLauncherCore.Net
         public IEnumerable<DownloadTask> DownloadTasks { get => _viewDownloadTasks.AsEnumerable(); }
 
         private System.Timers.Timer _timer = new System.Timers.Timer(1000);
-        private ConcurrentBag<DownloadTask> _downloadTasks;
+        private ConcurrentQueue<DownloadTask> _downloadTasks;
         private List<DownloadTask> _viewDownloadTasks;
         private readonly object _viewDownloadLocker = new object();
         private int _taskCount;
@@ -99,7 +100,7 @@ namespace NsisoLauncherCore.Net
         {
             if (!IsBusy)
             {
-                _downloadTasks = new ConcurrentBag<DownloadTask>(tasks);
+                _downloadTasks = new ConcurrentQueue<DownloadTask>(tasks);
                 _viewDownloadTasks = new List<DownloadTask>(tasks);
                 _taskCount = tasks.Count;
             }
@@ -113,8 +114,8 @@ namespace NsisoLauncherCore.Net
         {
             if (!IsBusy)
             {
-                _downloadTasks = new ConcurrentBag<DownloadTask>();
-                _downloadTasks.Add(task);
+                _downloadTasks = new ConcurrentQueue<DownloadTask>();
+                _downloadTasks.Enqueue(task);
                 _viewDownloadTasks = new List<DownloadTask>();
                 _viewDownloadTasks.Add(task);
                 _taskCount = 1;
@@ -216,7 +217,7 @@ namespace NsisoLauncherCore.Net
                 DownloadTask item = null;
                 while (!_downloadTasks.IsEmpty)
                 {
-                    if (_downloadTasks.TryTake(out item))
+                    if (_downloadTasks.TryDequeue(out item))
                     {
                         if (_shouldStop)
                         {
@@ -226,6 +227,19 @@ namespace NsisoLauncherCore.Net
                         ApendDebugLog("开始下载:" + item.From);
                         HTTPDownload(item);
                         ApendDebugLog("下载完成:" + item.From);
+                        if (item.Todo != null)
+                        {
+                            ApendDebugLog(string.Format("开始执行{0}下载后的安装过程", item.TaskName));
+                            var exc = item.Todo();
+                            if (exc != null)
+                            {
+                                ApendErrorLog(exc);
+                                if (!_errorList.ContainsKey(item))
+                                {
+                                    _errorList.Add(item, exc);
+                                }
+                            }
+                        }
                         item.SetDone();
                         RemoveItemFromViewTask(item);
                         DownloadProgressChanged?.Invoke(this, new DownloadProgressChangedArg() { TaskCount = _taskCount, LastTaskCount = _viewDownloadTasks.Count, DoneTask = item });
@@ -253,6 +267,10 @@ namespace NsisoLauncherCore.Net
                     {
                         Directory.CreateDirectory(dirName);
                     }
+                }
+                if (File.Exists(buffFilename))
+                {
+                    File.Delete(buffFilename);
                 }
                 if (_shouldStop)
                 {

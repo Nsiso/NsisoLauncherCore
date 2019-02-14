@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Endpoints;
 using NsisoLauncherCore.Net.MojangApi.Api;
 using NsisoLauncherCore.Net.MojangApi.Endpoints;
 using NsisoLauncherCore.Net.MojangApi.Responses;

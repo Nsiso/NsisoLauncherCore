@@ -6,6 +6,7 @@ using ICSharpCode.SharpZipLib;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace NsisoLauncherCore.Util.Installer
 {
@@ -90,6 +91,14 @@ namespace NsisoLauncherCore.Util.Installer
             File.WriteAllText(newPath, jsonObj.VersionInfo.ToString());
             Directory.Delete(tempPath, true);
             File.Delete(InstallerPath);
+        }
+
+        public async Task BeginInstallAsync()
+        {
+            await Task.Factory.StartNew(() =>
+            {
+                BeginInstall();
+            });
         }
     }
 }

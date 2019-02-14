@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using static NsisoLauncherCore.Net.MojangApi.Responses.AuthenticateResponse;
 using NsisoLauncherCore.Net.MojangApi;
 
-namespace  Endpoints
+namespace NsisoLauncherCore.Net.MojangApi.Endpoints
 {
 
     /// <summary>
