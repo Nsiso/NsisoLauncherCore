@@ -33,8 +33,16 @@ namespace NsisoLauncherCore.Util
         #region 检查Jar核心文件
         public static bool IsLostJarCore(LaunchHandler core, Version version)
         {
-            string jarPath = core.GetJarPath(version);
-            return !File.Exists(jarPath);
+            if (version.InheritsVersion == null)
+            {
+                string jarPath = core.GetJarPath(version);
+                return !File.Exists(jarPath);
+            }
+            else
+            {
+                return false;
+            }
+            
         }
         #endregion
 

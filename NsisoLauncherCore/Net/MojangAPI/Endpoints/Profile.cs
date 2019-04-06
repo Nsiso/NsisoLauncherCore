@@ -14,7 +14,6 @@ namespace NsisoLauncherCore.Net.MojangApi.Endpoints
     /// </summary>
     public class Profile : IEndpoint<ProfileResponse>
     {
-        // TODO RATE LIMIT
 
         /// <summary>
         /// 将未签名设置应用于请求

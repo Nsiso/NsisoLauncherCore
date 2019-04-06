@@ -81,14 +81,19 @@ namespace NsisoLauncherCore.Util.Installer
                 Directory.CreateDirectory(libDir);
             }
             File.Copy(tempPath + '\\' + jsonObj.Install.FilePath, libPath, true);
+            
 
             string newPath = PathManager.GetJsonPath(gameRootPath, jsonObj.Install.Target);
             string newDir = Path.GetDirectoryName(newPath);
+            string jarPath = PathManager.GetJarPath(gameRootPath, jsonObj.Install.Target);
+
             if (!Directory.Exists(newDir))
             {
                 Directory.CreateDirectory(newDir);
             }
             File.WriteAllText(newPath, jsonObj.VersionInfo.ToString());
+            File.Copy(tempPath + '\\' + jsonObj.Install.FilePath, jarPath, true);
+
             Directory.Delete(tempPath, true);
             File.Delete(InstallerPath);
         }

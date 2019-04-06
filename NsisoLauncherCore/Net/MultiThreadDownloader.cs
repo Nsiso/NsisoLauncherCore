@@ -20,6 +20,7 @@ namespace NsisoLauncherCore.Net
 
     public class DownloadSpeedChangedArg : EventArgs
     {
+        public decimal SizePerSec { get; set; }
         public decimal SpeedValue { get; set; }
         public string SpeedUnit { get; set; }
     }
@@ -49,6 +50,7 @@ namespace NsisoLauncherCore.Net
         private void _timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             DownloadSpeedChangedArg arg = new DownloadSpeedChangedArg();
+            arg.SizePerSec = _downloadSizePerSec;
             if (_downloadSizePerSec > 1048576)
             {
                 arg.SpeedUnit = "MB/s";
@@ -187,6 +189,7 @@ namespace NsisoLauncherCore.Net
                         {
                             while (true)
                             {
+                                Thread.Sleep(500);
                                 if (GetAvailableThreadsCount() == 0)
                                 {
                                     CompleteDownload();
@@ -267,6 +270,10 @@ namespace NsisoLauncherCore.Net
                     {
                         Directory.CreateDirectory(dirName);
                     }
+                }
+                if (File.Exists(realFilename))
+                {
+                    return;
                 }
                 if (File.Exists(buffFilename))
                 {
