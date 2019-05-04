@@ -228,11 +228,13 @@ namespace NsisoLauncherCore.Net
                             return;
                         }
                         ApendDebugLog("开始下载:" + item.From);
+                        item.SetState("下载中");
                         HTTPDownload(item);
                         ApendDebugLog("下载完成:" + item.From);
                         if (item.Todo != null)
                         {
                             ApendDebugLog(string.Format("开始执行{0}下载后的安装过程", item.TaskName));
+                            item.SetState("安装中");
                             var exc = item.Todo();
                             if (exc != null)
                             {

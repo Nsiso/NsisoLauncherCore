@@ -26,7 +26,7 @@ namespace NsisoLauncherCore.Net.MojangApi.Api
         /// <summary>
         /// 定义读取响应和写入请求的编码.
         /// </summary>
-        public static Encoding Encoding = Encoding.Default;
+        public static Encoding Encoding = Encoding.UTF8;
 
         /// <summary>
         /// 定义验证服务器URL
@@ -36,7 +36,7 @@ namespace NsisoLauncherCore.Net.MojangApi.Api
         /// <summary>
         /// NsisoLauncher5目前名称.
         /// </summary>
-        public readonly static string Name = "NsisoLauncher5";
+        public readonly static string Name = "NsisoLauncher";
 
         /// <summary>
         /// NsisoLauncher5目前版本号.
