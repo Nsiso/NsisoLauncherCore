@@ -95,7 +95,7 @@ namespace NsisoLauncherCore
 
         }
 
-        #region 内部启动主方法
+        #region 启动主方法
         private LaunchResult Launch(LaunchSetting setting)
         {
             try
@@ -169,7 +169,8 @@ namespace NsisoLauncherCore
                     {
                         Process = process,
                         Version = setting.Version,
-                        ExitCode = process.ExitCode
+                        ExitCode = process.ExitCode,
+                        Duration = (process.StartTime - process.ExitTime)
                     });
 
                 });
@@ -290,9 +291,25 @@ namespace NsisoLauncherCore
 
     public class GameExitArg : EventArgs
     {
+        /// <summary>
+        /// Exit code
+        /// </summary>
         public int ExitCode { get; set; }
+
+        /// <summary>
+        /// Process obj
+        /// </summary>
         public Process Process { get; set; }
+
+        /// <summary>
+        /// Exited Version
+        /// </summary>
         public Modules.Version Version { get; set; }
+
+        /// <summary>
+        /// From launch to exit time spawn
+        /// </summary>
+        public TimeSpan Duration { get; set; }
 
         public bool IsNormalExit()
         {

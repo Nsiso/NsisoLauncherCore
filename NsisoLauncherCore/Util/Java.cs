@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace NsisoLauncherCore.Util
 {
+    //TODO:自动选择最佳JAVA版本（优先JAVA8）
     public class InstallJavaOptions
     {
         /// <summary>

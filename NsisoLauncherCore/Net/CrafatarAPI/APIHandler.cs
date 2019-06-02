@@ -11,9 +11,15 @@ namespace NsisoLauncherCore.Net.CrafatarAPI
     public class APIHandler
     {
         const string APIUrl = "https://crafatar.com/avatars/";
+        bool overlay = true;
         public async Task<ImageSource> GetHeadSculSource(string uuid)
         {
-            string url = APIUrl + uuid + "?size=60";
+            string arg = "?size=60";
+            if (overlay)
+            {
+                arg += "&overlay";
+            }
+            string url = APIUrl + uuid + arg;
             var res = await APIRequester.HttpGetAsync(url);
             //var stream = await res.Content.ReadAsStreamAsync();
             if (res.IsSuccessStatusCode)
