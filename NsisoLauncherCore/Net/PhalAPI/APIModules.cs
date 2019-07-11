@@ -22,6 +22,21 @@ namespace NsisoLauncherCore.Net.PhalAPI
         public string Msg { get; set; }
     }
 
+    public class NsisoLauncherVersionListResponse
+    {
+        [JsonProperty("list")]
+        public List<NsisoLauncherVersionResponse> List { get; set; }
+
+        [JsonProperty("total")]
+        public int Total { get; set; }
+
+        [JsonProperty("err_msg")]
+        public string ErrorMessage { get; set; }
+
+        [JsonProperty("err_code")]
+        public int ErrorCode { get; set; }
+    }
+
     public class NsisoLauncherVersionResponse
     {
         /// <summary>

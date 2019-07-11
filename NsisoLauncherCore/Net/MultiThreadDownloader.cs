@@ -231,6 +231,20 @@ namespace NsisoLauncherCore.Net
                         item.SetState("下载中");
                         HTTPDownload(item);
                         ApendDebugLog("下载完成:" + item.From);
+                        if (!string.IsNullOrWhiteSpace(item.SHA1))
+                        {
+                            item.SetState("校验中");
+                            string sha1 = Util.FileHelper.GetSHA1(item.To);
+                            if (item.SHA1 != sha1)
+                            {
+                                ApendDebugLog("SHA1校验失败");
+                                File.Delete(item.To);
+                                if (!_errorList.ContainsKey(item))
+                                {
+                                    _errorList.Add(item, new Exception("文件SHA1校验失败"));
+                                }
+                            }
+                        }
                         if (item.Todo != null)
                         {
                             ApendDebugLog(string.Format("开始执行{0}下载后的安装过程", item.TaskName));

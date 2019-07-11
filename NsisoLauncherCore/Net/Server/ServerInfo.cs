@@ -123,10 +123,18 @@ namespace NsisoLauncherCore.Net.Server
                 }
                 catch (SocketException)
                 {
-                    RecordSRV result = (RecordSRV)new Resolver().Query("_minecraft._tcp." + this.ServerAddress, QType.SRV).Answers.First().RECORD;
-                    tcp = new TcpClient(result.TARGET, result.PORT);
-                    this.ServerAddress = result.TARGET;
-                    this.ServerPort = result.PORT;
+                    RecordSRV result = (RecordSRV)new Resolver().Query("_minecraft._tcp." + this.ServerAddress, QType.SRV).Answers?.FirstOrDefault()?.RECORD;
+                    if (result != null)
+                    {
+                        tcp = new TcpClient(result.TARGET, result.PORT);
+                        this.ServerAddress = result.TARGET;
+                        this.ServerPort = result.PORT;
+                    }
+                    else
+                    {
+                        this.State = StateType.BAD_CONNECT;
+                        return;
+                    }
                 }
 
                 try

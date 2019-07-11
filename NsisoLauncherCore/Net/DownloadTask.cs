@@ -34,6 +34,11 @@ namespace NsisoLauncherCore.Net
         /// </summary>
         public Func<Exception> Todo { get; set; }
 
+        /// <summary>
+        /// 校验SHA1，不设置即不校验
+        /// </summary>
+        public string SHA1 { get; set; }
+
         #region 界面绑定属性
 
         private long _totalSize = 1;

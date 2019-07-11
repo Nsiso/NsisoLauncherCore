@@ -38,8 +38,9 @@ namespace NsisoLauncherCore.Auth
                     return new AuthenticateResult(AuthState.SUCCESS)
                     {
                         AccessToken = result.AccessToken,
-                        UUID = result.SelectedProfile,
-                        UserData = result.User
+                        SelectedProfileUUID = result.SelectedProfile,
+                        UserData = result.User,
+                        Profiles = result.AvailableProfiles
                     };
                 }
                 else
@@ -82,8 +83,9 @@ namespace NsisoLauncherCore.Auth
                     return new AuthenticateResult(AuthState.SUCCESS)
                     {
                         AccessToken = result.AccessToken,
-                        UUID = result.SelectedProfile,
-                        UserData = result.User
+                        SelectedProfileUUID = result.SelectedProfile,
+                        UserData = result.User,
+                        Profiles = result.AvailableProfiles
                     };
                 }
                 else
@@ -120,7 +122,7 @@ namespace NsisoLauncherCore.Auth
 
         public List<string> AuthArgs { get; set; }
 
-        public Uuid UUID { get; set; }
+        public Uuid SelectedProfileUUID { get; set; }
 
         public UserData UserData { get; set; }
 
@@ -141,7 +143,9 @@ namespace NsisoLauncherCore.Auth
                 var result = resultTask.Result;
                 if (result.IsSuccess)
                 {
-                    return new AuthenticateResult(AuthState.SUCCESS) { AccessToken = this.AccessToken, UserData = this.UserData, UUID = this.UUID };
+                    return new AuthenticateResult(AuthState.SUCCESS) { AccessToken = this.AccessToken,
+                        SelectedProfileUUID = this.SelectedProfileUUID,
+                        UserData = this.UserData };
                 }
                 else
                 {
@@ -171,8 +175,8 @@ namespace NsisoLauncherCore.Auth
                     return new AuthenticateResult(state)
                     {
                         AccessToken = AccessToken = this.AccessToken,
+                        SelectedProfileUUID = this.SelectedProfileUUID,
                         UserData = this.UserData,
-                        UUID = this.UUID,
                         Error = refreshResult.Error
                     };
                 }
@@ -183,7 +187,7 @@ namespace NsisoLauncherCore.Auth
                     Error = new Net.MojangApi.Error() { ErrorMessage = ex.Message, Exception = ex },
                     AccessToken = AccessToken = this.AccessToken,
                     UserData = this.UserData,
-                    UUID = this.UUID
+                    SelectedProfileUUID = this.SelectedProfileUUID
                 };
             }
         }
@@ -204,7 +208,7 @@ namespace NsisoLauncherCore.Auth
                 var result = await validate.PerformRequestAsync();
                 if (result.IsSuccess)
                 {
-                    return new AuthenticateResult(AuthState.SUCCESS) { AccessToken = this.AccessToken, UserData = this.UserData, UUID = this.UUID };
+                    return new AuthenticateResult(AuthState.SUCCESS) { AccessToken = this.AccessToken, UserData = this.UserData, SelectedProfileUUID = this.SelectedProfileUUID };
                 }
                 else
                 {
@@ -234,7 +238,7 @@ namespace NsisoLauncherCore.Auth
                     {
                         AccessToken = AccessToken = this.AccessToken,
                         UserData = this.UserData,
-                        UUID = this.UUID,
+                        SelectedProfileUUID = this.SelectedProfileUUID,
                         Error = refreshResult.Error
                     };
                 }
@@ -246,16 +250,16 @@ namespace NsisoLauncherCore.Auth
                     Error = new Net.MojangApi.Error() { ErrorMessage = ex.Message, Exception = ex },
                     AccessToken = AccessToken = this.AccessToken,
                     UserData = this.UserData,
-                    UUID = this.UUID
+                    SelectedProfileUUID = this.SelectedProfileUUID
                 };
             }
         }
 
-        public YggdrasilTokenAuthenticator(string token, Uuid uuid, UserData userdata)
+        public YggdrasilTokenAuthenticator(string token, Uuid selectedProfileUUID, UserData userData)
         {
             this.AccessToken = token;
-            this.UUID = uuid;
-            this.UserData = userdata;
+            this.SelectedProfileUUID = selectedProfileUUID;
+            this.UserData = userData;
         }
     }
 }

@@ -25,7 +25,9 @@ namespace NsisoLauncherCore.Auth
 
         public string AccessToken { get; set; }
 
-        public Uuid UUID { get; set; }
+        public List<Uuid> Profiles { get; set; }
+
+        public Uuid SelectedProfileUUID { get; set; }
 
         public UserData UserData { get; set; }
 

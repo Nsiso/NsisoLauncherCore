@@ -76,18 +76,18 @@ namespace NsisoLauncherCore
 
             #region 处理游戏参数
             string assetsPath = string.Format("\"{0}\\assets\"", handler.GameRootPath);
-            string legacy = setting.AuthenticateResult.UUID.Legacy ? "Legacy" : "Mojang";
+            string legacy = setting.AuthenticateResult.SelectedProfileUUID.Legacy ? "Legacy" : "Mojang";
             string gameDir = string.Format("\"{0}\"", handler.GetGameVersionRootDir(setting.Version));
             Dictionary<string, string> gameArgDic = new Dictionary<string, string>()
             {
-                {"${auth_player_name}",string.Format("\"{0}\"", setting.AuthenticateResult.UUID.PlayerName) },
+                {"${auth_player_name}",string.Format("\"{0}\"", setting.AuthenticateResult.SelectedProfileUUID.PlayerName) },
                 {"${auth_session}",setting.AuthenticateResult.AccessToken },
                 {"${version_name}",string.Format("\"{0}\"", setting.Version.ID) },
                 {"${game_directory}",gameDir },
                 {"${game_assets}",assetsPath },
                 {"${assets_root}",assetsPath },
                 {"${assets_index_name}",setting.Version.Assets },
-                {"${auth_uuid}",setting.AuthenticateResult.UUID.Value },
+                {"${auth_uuid}",setting.AuthenticateResult.SelectedProfileUUID.Value },
                 {"${auth_access_token}",setting.AuthenticateResult.AccessToken },
                 {"${user_properties}",ToList(setting.AuthenticateResult.UserData?.Properties) },
                 {"${user_type}",legacy },
