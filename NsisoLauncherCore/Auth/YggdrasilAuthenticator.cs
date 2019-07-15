@@ -18,7 +18,7 @@ namespace NsisoLauncherCore.Auth
 
         public List<string> AuthArgs { get; set; }
 
-        public AuthenticateResult DoAuthenticate()
+        public virtual AuthenticateResult DoAuthenticate()
         {
             try
             {
@@ -63,7 +63,7 @@ namespace NsisoLauncherCore.Auth
             }
         }
 
-        public async Task<AuthenticateResult> DoAuthenticateAsync()
+        public virtual async Task<AuthenticateResult> DoAuthenticateAsync()
         {
             try
             {

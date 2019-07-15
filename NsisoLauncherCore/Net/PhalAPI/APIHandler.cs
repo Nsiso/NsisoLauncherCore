@@ -10,7 +10,7 @@ namespace NsisoLauncherCore.Net.PhalAPI
 {
     public class APIHandler
     {
-        const string APIUrl = "http://hn2.api.okayapi.com/";
+        const string APIUrl = "http://api.nsiso.com/";
         const string App_key = "7B27B7B6A3C10158C28E3DE0B13785CD";
 
         public bool NoTracking { get; set; }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 using NsisoLauncherCore.Net.MojangApi.Api;
 using NsisoLauncherCore.Net.MojangApi.Endpoints;
 using NsisoLauncherCore.Net.MojangApi.Responses;
@@ -10,12 +12,21 @@ namespace NsisoLauncherCore.Auth
 {
     public class Nide8Authenticator : YggdrasilAuthenticator
     {
-        public Nide8Authenticator(Credentials credentials) : base(credentials) { }
+        public string Nide8ID { get; set; }
+        public Nide8Authenticator(string nide8ID, Credentials credentials) : base(credentials)
+        {
+            Nide8ID = nide8ID;
+            ProxyAuthServerAddress = string.Format("https://auth2.nide8.com:233/{0}/authserver", Nide8ID);
+        }
     }
 
     public class Nide8TokenAuthenticator : YggdrasilTokenAuthenticator
     {
-        public Nide8TokenAuthenticator(string token, Uuid selectedProfileUUID, UserData userData) : base(token, selectedProfileUUID, userData) { }
-        
+        public string Nide8ID { get; set; }
+        public Nide8TokenAuthenticator(string nide8ID, string token, Uuid selectedProfileUUID, UserData userData) : base(token, selectedProfileUUID, userData)
+        {
+            Nide8ID = nide8ID;
+            ProxyAuthServerAddress = string.Format("https://auth2.nide8.com:233/{0}/authserver", Nide8ID);
+        }
     }
 }
